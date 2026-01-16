@@ -4,6 +4,7 @@ import '../core/theme/app_colors.dart';
 import '../core/theme/app_text_styles.dart';
 import '../core/widgets/app_button.dart';
 import '../core/widgets/app_card.dart';
+import '../core/localization/app_localizations.dart';
 import 'check_in_screen.dart';
 import 'check_out_screen.dart';
 import 'leave_request_screen.dart';
@@ -96,7 +97,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: Text(context.tr('dashboard.title')),
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
@@ -174,7 +175,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     Row(
                       children: [
                         Text(
-                          'Attendance Status',
+                          context.tr('dashboard.attendance_status'),
                           style: AppTextStyles.h4,
                         ),
                         const Spacer(),
@@ -243,7 +244,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children: [
                   Expanded(
                     child: AppButton(
-                      text: 'Check In',
+                      text: context.tr('dashboard.check_in'),
                       icon: Icons.login,
                       onPressed: _attendanceStatus == 'not_checked_in'
                           ? () {
@@ -261,7 +262,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: AppButton(
-                      text: 'Check Out',
+                      text: context.tr('dashboard.check_out'),
                       icon: Icons.logout,
                       type: ButtonType.secondary,
                       onPressed: _attendanceStatus == 'checked_in'
@@ -285,15 +286,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               // Secondary Actions Section
               Text(
-                'More Options',
+                context.tr('dashboard.more_options'),
                 style: AppTextStyles.h4,
               ),
               const SizedBox(height: 12),
               
               _buildMenuCard(
                 icon: Icons.history,
-                title: 'Attendance History',
-                subtitle: 'View your attendance records',
+                title: context.tr('attendance.history'),
+                subtitle: context.tr('attendance.view_records'),
                 onTap: () {
                   // TODO: Navigate to attendance history
                 },
@@ -302,8 +303,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               
               _buildMenuCard(
                 icon: Icons.medical_services_outlined,
-                title: 'Leave & Sick Request',
-                subtitle: 'Submit leave or sick day request',
+                title: context.tr('leave_request.title'),
+                subtitle: context.tr('leave_request.submit_request'),
                 onTap: () {
                   Navigator.push(
                     context,

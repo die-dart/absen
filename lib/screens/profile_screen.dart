@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_text_styles.dart';
 import '../core/widgets/app_button.dart';
 import '../core/widgets/app_card.dart';
+import '../core/localization/app_localizations.dart';
+import '../core/localization/locale_provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   final String employeeName;
@@ -23,11 +26,11 @@ class ProfileScreen extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          'Confirm Logout',
+          context.tr('profile.confirm_logout_title'),
           style: AppTextStyles.h4,
         ),
         content: Text(
-          'Are you sure you want to logout?',
+          context.tr('profile.confirm_logout_message'),
           style: AppTextStyles.bodyMedium,
         ),
         shape: RoundedRectangleBorder(
@@ -37,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: Text(
-              'Cancel',
+              context.tr('common.cancel'),
               style: AppTextStyles.button.copyWith(
                 color: AppColors.textSecondary,
               ),
@@ -53,7 +56,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             child: Text(
-              'Logout',
+              context.tr('profile.logout'),
               style: AppTextStyles.button,
             ),
           ),
@@ -69,10 +72,12 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeProvider = Provider.of<LocaleProvider>(context);
+    
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: Text(context.tr('profile.title')),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -141,15 +146,16 @@ class ProfileScreen extends StatelessWidget {
 
               // Employee Information Section
               Text(
-                'Employee Information',
+                context.tr('profile.employee_information'),
                 style: AppTextStyles.h4,
               ),
               const SizedBox(height: 12),
 
               // Job Position Card
               _buildInfoCard(
+                context,
                 icon: Icons.work_outline,
-                label: 'Job Position',
+                label: context.tr('profile.job_position'),
                 value: jobPosition,
                 iconColor: AppColors.primary,
               ),
@@ -157,8 +163,9 @@ class ProfileScreen extends StatelessWidget {
 
               // Department Card
               _buildInfoCard(
+                context,
                 icon: Icons.business,
-                label: 'Department',
+                label: context.tr('profile.department'),
                 value: department,
                 iconColor: AppColors.info,
               ),
@@ -166,18 +173,76 @@ class ProfileScreen extends StatelessWidget {
 
               // Account Settings Section
               Text(
-                'Account Settings',
+                context.tr('profile.account_settings'),
                 style: AppTextStyles.h4,
               ),
               const SizedBox(height: 12),
 
-              // Settings Options
+              // Language Switcher Card
+              AppCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Icon(
+                            Icons.language,
+                            color: AppColors.primary,
+                            size: 24,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Text(
+                            context.tr('profile.language'),
+                            style: AppTextStyles.labelLarge,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    
+                    // Language Toggle Buttons
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildLanguageButton(
+                            context,
+                            label: context.tr('languages.indonesian'),
+                            isSelected: localeProvider.isIndonesian,
+                            onTap: () => localeProvider.setIndonesian(),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _buildLanguageButton(
+                            context,
+                            label: context.tr('languages.english'),
+                            isSelected: localeProvider.isEnglish,
+                            onTap: () => localeProvider.setEnglish(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              // Change Password
               AppCard(
                 onTap: () {
-                  // TODO: Navigate to change password
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Change password feature coming soon'),
+                    SnackBar(
+                      content: Text(
+                        '${context.tr('profile.change_password')} ${context.tr('profile.coming_soon')}',
+                      ),
                     ),
                   );
                 },
@@ -198,7 +263,7 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(width: 16),
                     Expanded(
                       child: Text(
-                        'Change Password',
+                        context.tr('profile.change_password'),
                         style: AppTextStyles.labelLarge,
                       ),
                     ),
@@ -211,12 +276,14 @@ class ProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
 
+              // App Settings
               AppCard(
                 onTap: () {
-                  // TODO: Navigate to app settings
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Settings feature coming soon'),
+                    SnackBar(
+                      content: Text(
+                        '${context.tr('profile.app_settings')} ${context.tr('profile.coming_soon')}',
+                      ),
                     ),
                   );
                 },
@@ -237,7 +304,7 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(width: 16),
                     Expanded(
                       child: Text(
-                        'App Settings',
+                        context.tr('profile.app_settings'),
                         style: AppTextStyles.labelLarge,
                       ),
                     ),
@@ -251,20 +318,10 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 32),
 
               // Logout Button
-              AppButton(
-                text: 'Logout',
-                icon: Icons.logout,
-                fullWidth: true,
-                type: ButtonType.outlined,
-                onPressed: () => _handleLogout(context),
-              ),
-              
-              // Override button color for danger style
-              const SizedBox(height: 12),
               OutlinedButton.icon(
                 onPressed: () => _handleLogout(context),
                 icon: const Icon(Icons.logout),
-                label: const Text('Logout'),
+                label: Text(context.tr('profile.logout')),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.error,
                   side: const BorderSide(color: AppColors.error, width: 1.5),
@@ -282,7 +339,7 @@ class ProfileScreen extends StatelessWidget {
               // App Version
               Center(
                 child: Text(
-                  'Version 1.0.0',
+                  '${context.tr('profile.version')} 1.0.0',
                   style: AppTextStyles.caption,
                 ),
               ),
@@ -293,7 +350,40 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoCard({
+  Widget _buildLanguageButton(
+    BuildContext context, {
+    required String label,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? AppColors.primary
+              : AppColors.surfaceVariant,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: AppTextStyles.labelMedium.copyWith(
+              color: isSelected
+                  ? AppColors.textOnPrimary
+                  : AppColors.textPrimary,
+              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoCard(
+    BuildContext context, {
     required IconData icon,
     required String label,
     required String value,

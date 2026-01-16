@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_text_styles.dart';
 import '../core/widgets/app_card.dart';
+import '../core/localization/app_localizations.dart';
 
 // Attendance record model
 class AttendanceRecord {
@@ -154,13 +155,13 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
   String _getStatusText(String status) {
     switch (status) {
       case 'on_time':
-        return 'On Time';
+        return context.tr('attendance.on_time');
       case 'late':
-        return 'Late';
+        return context.tr('attendance.late');
       case 'leave':
-        return 'Leave';
+        return context.tr('attendance.leave');
       case 'sick':
-        return 'Sick';
+        return context.tr('attendance.sick');
       default:
         return 'Unknown';
     }
@@ -173,7 +174,7 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Attendance History'),
+        title: Text(context.tr('attendance.history')),
       ),
       body: Column(
         children: [
@@ -185,7 +186,7 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Filter by Date',
+                  context.tr('attendance.filter_by_date'),
                   style: AppTextStyles.labelMedium,
                 ),
                 const SizedBox(height: 12),
@@ -380,7 +381,7 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'In',
+                              context.tr('attendance.check_in_time'),
                               style: AppTextStyles.caption,
                             ),
                             Text(
@@ -417,7 +418,7 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Out',
+                              context.tr('attendance.check_out_time'),
                               style: AppTextStyles.caption,
                             ),
                             Text(
@@ -451,7 +452,7 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
           ),
           const SizedBox(height: 16),
           Text(
-            'No records found',
+            context.tr('attendance.no_records'),
             style: AppTextStyles.h4.copyWith(
               color: AppColors.textSecondary,
             ),
@@ -459,7 +460,7 @@ class _AttendanceHistoryScreenState extends State<AttendanceHistoryScreen> {
           const SizedBox(height: 8),
           Text(
             _filterDate != null
-                ? 'No attendance records for this date'
+                ? context.tr('attendance.no_records_date')
                 : 'Your attendance history will appear here',
             style: AppTextStyles.bodySmall,
             textAlign: TextAlign.center,

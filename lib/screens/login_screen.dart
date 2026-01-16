@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_text_styles.dart';
 import '../core/widgets/app_button.dart';
+import '../core/localization/app_localizations.dart';
 import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -69,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (mounted) {
         setState(() {
           _isLoading = false;
-          _errorMessage = 'Invalid email or password. Please try again.';
+          _errorMessage = context.tr('login.error_invalid_credentials');
         });
       }
     }
@@ -126,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   // Company Name
                   Text(
-                    'PT Horizon Solusi Expertindo',
+                    context.tr('login.title'),
                     style: AppTextStyles.h3,
                     textAlign: TextAlign.center,
                   ),
@@ -134,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   // Subtitle
                   Text(
-                    'Employee Attendance System',
+                    context.tr('login.subtitle'),
                     style: AppTextStyles.bodyMedium.copyWith(
                       color: AppColors.textSecondary,
                     ),
@@ -154,10 +155,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
+                        return context.tr('login.error_email_required');
                       }
                       if (!value.contains('@')) {
-                        return 'Please enter a valid email';
+                        return context.tr('login.error_email_invalid');
                       }
                       return null;
                     },
@@ -170,8 +171,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     obscureText: _obscurePassword,
                     enabled: !_isLoading,
                     decoration: InputDecoration(
-                      labelText: 'Password',
-                      hintText: 'Enter your password',
+                      labelText: context.tr('login.password'),
+                      hintText: context.tr('login.password_hint'),
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -188,10 +189,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
+                        return context.tr('login.error_password_required');
                       }
                       if (value.length < 6) {
-                        return 'Password must be at least 6 characters';
+                        return context.tr('login.error_password_short');
                       }
                       return null;
                     },
@@ -233,7 +234,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   // Login Button
                   AppButton(
-                    text: 'Login',
+                    text: context.tr('login.login_button'),
                     fullWidth: true,
                     isLoading: _isLoading,
                     onPressed: _isLoading ? null : _handleLogin,
