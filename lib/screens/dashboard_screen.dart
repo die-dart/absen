@@ -4,6 +4,9 @@ import '../core/theme/app_colors.dart';
 import '../core/theme/app_text_styles.dart';
 import '../core/widgets/app_button.dart';
 import '../core/widgets/app_card.dart';
+import 'check_in_screen.dart';
+import 'check_out_screen.dart';
+import 'leave_request_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   final String employeeName;
@@ -243,7 +246,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       text: 'Check In',
                       icon: Icons.login,
                       onPressed: _attendanceStatus == 'not_checked_in'
-                          ? _handleCheckIn
+                          ? () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const CheckInScreen(),
+                                ),
+                              );
+                            }
                           : null,
                       fullWidth: true,
                     ),
@@ -255,7 +265,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       icon: Icons.logout,
                       type: ButtonType.secondary,
                       onPressed: _attendanceStatus == 'checked_in'
-                          ? _handleCheckOut
+                          ? () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => CheckOutScreen(
+                                    checkInTime: _checkInTime,
+                                  ),
+                                ),
+                              );
+                            }
                           : null,
                       fullWidth: true,
                     ),
@@ -286,7 +305,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 title: 'Leave & Sick Request',
                 subtitle: 'Submit leave or sick day request',
                 onTap: () {
-                  // TODO: Navigate to leave request
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const LeaveRequestScreen(),
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 12),

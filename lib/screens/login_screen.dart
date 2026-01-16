@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_text_styles.dart';
 import '../core/widgets/app_button.dart';
-import 'dashboard_screen.dart';
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -50,12 +50,17 @@ class _LoginScreenState extends State<LoginScreen> {
     // For demo purposes, check simple credentials
     if (_emailController.text == 'admin@horizon.com' && 
         _passwordController.text == 'password') {
-      // Success - navigate to dashboard
+      // Success - navigate to home with bottom nav
       if (mounted) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (_) => const DashboardScreen(employeeName: 'Admin'),
+            builder: (_) => const HomeScreen(
+              employeeName: 'Admin',
+              employeeId: 'EMP-2026-001',
+              jobPosition: 'Software Engineer',
+              department: 'IT Department',
+            ),
           ),
         );
       }
