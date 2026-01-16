@@ -71,7 +71,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
       } else {
         setState(() {
           _isLoading = false;
-          _errorMessage = 'Failed to check in. Please try again.';
+          _errorMessage = context.tr('check_in.error_failed');
         });
       }
     }
@@ -82,7 +82,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Check In'),
+        title: Text(context.tr('check_in.title')),
       ),
       body: SafeArea(
         child: Center(
@@ -161,7 +161,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            'You have not checked in today',
+                            context.tr('check_in.not_checked_in'),
                             style: AppTextStyles.bodyMedium.copyWith(
                               color: AppColors.warning,
                               fontWeight: FontWeight.w500,
@@ -196,7 +196,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                             const SizedBox(width: 12),
                             Expanded(
                               child: Text(
-                                'Check-in successful!',
+                                context.tr('check_in.success'),
                                 style: AppTextStyles.labelLarge.copyWith(
                                   color: AppColors.success,
                                   fontWeight: FontWeight.w600,
@@ -222,7 +222,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                'Checked in at ${DateFormat('HH:mm:ss').format(_checkInTime!)}',
+                                context.trParams('check_in.checked_in_at', {'time': DateFormat('HH:mm:ss').format(_checkInTime!)}),
                                 style: AppTextStyles.bodyMedium.copyWith(
                                   color: AppColors.success,
                                   fontWeight: FontWeight.w500,
@@ -273,7 +273,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                 // Check In Button
                 if (!_isCheckedIn)
                   AppButton(
-                    text: 'Check In',
+                    text: context.tr('check_in.title'),
                     icon: Icons.login,
                     fullWidth: true,
                     isLoading: _isLoading,
@@ -283,7 +283,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                 // Success Actions (after check-in)
                 if (_isCheckedIn) ...[
                   AppButton(
-                    text: 'Back to Dashboard',
+                    text: context.tr('check_in.back_to_dashboard'),
                     icon: Icons.home,
                     fullWidth: true,
                     onPressed: () {
@@ -292,7 +292,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                   ),
                   const SizedBox(height: 12),
                   AppButton(
-                    text: 'Check Out',
+                    text: context.tr('check_out.title'),
                     icon: Icons.logout,
                     type: ButtonType.outlined,
                     fullWidth: true,
@@ -306,7 +306,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                 if (_errorMessage != null) ...[
                   const SizedBox(height: 12),
                   AppButton(
-                    text: 'Try Again',
+                    text: context.tr('common.try_again'),
                     type: ButtonType.outlined,
                     fullWidth: true,
                     onPressed: () {
@@ -322,7 +322,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                 // Info Text
                 Center(
                   child: Text(
-                    'Your attendance will be recorded',
+                    context.tr('check_in.attendance_recorded'),
                     style: AppTextStyles.bodySmall,
                     textAlign: TextAlign.center,
                   ),

@@ -123,7 +123,7 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Leave & Sick Request'),
+        title: Text(context.tr('leave_request.title')),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -135,12 +135,12 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
               children: [
                 // Page Title
                 Text(
-                  'Submit a Request',
+                  context.tr('leave_request.submit_request'),
                   style: AppTextStyles.h3,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Fill in the details below to request leave or sick day',
+                  context.tr('leave_request.description'),
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary,
                   ),
@@ -153,9 +153,9 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Request Type',
+                        context.tr('leave_request.request_type'),
                         style: AppTextStyles.labelLarge,
-                      ),
+ ),
                       const SizedBox(height: 12),
                       DropdownButtonFormField<String>(
                         value: _requestType,
@@ -185,14 +185,14 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
                             color: AppColors.primary,
                           ),
                         ),
-                        items: const [
+                        items: [
                           DropdownMenuItem(
                             value: 'Leave',
-                            child: Text('Leave'),
+                            child: Text(context.tr('leave_request.leave')),
                           ),
                           DropdownMenuItem(
                             value: 'Sick',
-                            child: Text('Sick Day'),
+                            child: Text(context.tr('leave_request.sick_day')),
                           ),
                         ],
                         onChanged: _requestStatus == null
@@ -250,7 +250,7 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
                                   _selectedDate != null
                                       ? DateFormat('EEEE, d MMMM yyyy')
                                           .format(_selectedDate!)
-                                      : 'Select date',
+                                      : context.tr('leave_request.select_date'),
                                   style: _selectedDate != null
                                       ? AppTextStyles.bodyMedium
                                       : AppTextStyles.bodyMedium.copyWith(

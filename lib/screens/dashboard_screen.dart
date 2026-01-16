@@ -56,11 +56,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String _getGreeting() {
     final hour = DateTime.now().hour;
     if (hour < 12) {
-      return 'Good Morning';
+      return context.tr('dashboard.greeting_morning');
     } else if (hour < 17) {
-      return 'Good Afternoon';
+      return context.tr('dashboard.greeting_afternoon');
     } else {
-      return 'Good Evening';
+      return context.tr('dashboard.greeting_evening');
     }
   }
 
@@ -292,16 +292,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const SizedBox(height: 12),
               
               _buildMenuCard(
-                icon: Icons.history,
-                title: context.tr('attendance.history'),
-                subtitle: context.tr('attendance.view_records'),
-                onTap: () {
-                  // TODO: Navigate to attendance history
-                },
-              ),
-              const SizedBox(height: 12),
-              
-              _buildMenuCard(
                 icon: Icons.medical_services_outlined,
                 title: context.tr('leave_request.title'),
                 subtitle: context.tr('leave_request.submit_request'),
@@ -312,16 +302,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       builder: (_) => const LeaveRequestScreen(),
                     ),
                   );
-                },
-              ),
-              const SizedBox(height: 12),
-              
-              _buildMenuCard(
-                icon: Icons.person_outline,
-                title: 'Profile',
-                subtitle: 'Manage your profile settings',
-                onTap: () {
-                  // TODO: Navigate to profile
                 },
               ),
               const SizedBox(height: 24),
